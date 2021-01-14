@@ -72,4 +72,10 @@ public class HomeController {
             return "redirect:/books";
         }
     }
+    
+    @RequestMapping(value="/books/{id}", method=RequestMethod.DELETE)
+    public String destroy(@PathVariable("id") Long id) {
+        bookService.deleteBook(id);
+        return "redirect:/books";
+    }
 }
