@@ -55,4 +55,21 @@ public class HomeController {
         model.addAttribute("book", books);
 		return "show.jsp";
 	}
+    
+    @RequestMapping("/books/{id}/edit")
+    public String edit(@PathVariable("id") Long id, Model model) {
+        Books book = bookService.findBook(id);
+        model.addAttribute("book", book);
+        return "edit.jsp";
+    }
+    
+    @RequestMapping(value="/books/{id}", method=RequestMethod.PUT)
+    public String update(@Valid @ModelAttribute("book") Books book, BindingResult result) {
+        if (result.hasErrors()) {
+            return "edit.jsp";
+        } else {
+            bookService.changeBook(book);
+            return "redirect:/books";
+        }
+    }
 }
